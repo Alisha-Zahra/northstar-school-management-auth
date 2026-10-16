@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Northstar — School Operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="role-gate" id="roleGate" aria-labelledby="gateTitle">
+  <div class="gate-top"><a class="brand gate-brand" href="#"><span class="brand-symbol"><i></i><i></i><i></i><i></i></span><span><b>northstar</b><small>SCHOOL OPERATIONS</small></span></a><span class="gate-tag"><i></i> SCHOOL MANAGEMENT PORTAL</span></div>
+  <div class="gate-content"><div class="gate-copy"><div class="gate-eyebrow"><span></span> ONE SCHOOL. CLEAR RESPONSIBILITIES.</div><h1 id="gateTitle">Good decisions start<br>with the <em>right workspace.</em></h1><p>Select your role to open a workspace designed around your responsibilities. Each role has its own focus, tools and approval view.</p></div>
+    <div class="role-cards">
+      <button class="role-card accountant-card" data-enter-role="accountant"><span class="role-number">01 / FINANCE</span><span class="role-illustration">₨</span><strong>Accountant</strong><span class="role-desc">Record fees, manage vendors, track stock and submit expenses.</span><span class="role-bottom"><span>Open Accountant workspace</span><b>↗</b></span></button>
+      <button class="role-card hod-card" data-enter-role="hod"><span class="role-number">02 / VERIFICATION</span><span class="role-illustration">✓</span><strong>HOD</strong><span class="role-desc">Verify entries, check supporting documents and return incomplete requests.</span><span class="role-bottom"><span>Open HOD workspace</span><b>↗</b></span></button>
+      <button class="role-card gm-card" data-enter-role="gm"><span class="role-number">03 / MANAGEMENT</span><span class="role-illustration">◈</span><strong>GM</strong><span class="role-desc">Review school-wide reports and make final approval decisions.</span><span class="role-bottom"><span>Open GM workspace</span><b>↗</b></span></button>
+    </div>
+    <form class="auth-panel" id="loginForm" hidden>
+      <button class="auth-back" id="backToRoles" type="button">← Back to roles</button>
+      <div class="auth-heading"><span class="auth-lock">⌑</span><div><div class="auth-eyebrow" id="loginRoleEyebrow">SECURE WORKSPACE LOGIN</div><h2 id="loginTitle">Accountant login</h2><p>Sign in with the account assigned to you.</p></div></div>
+      <label for="loginUsername">Username or email</label><input id="loginUsername" name="username" autocomplete="username" required placeholder="Enter your username or email">
+      <label for="loginPassword">Password</label><div class="password-wrap"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"><button type="button" id="togglePassword" aria-label="Show password">Show</button></div>
+      <p class="auth-error" id="loginError" role="alert" hidden></p><button class="auth-submit" id="loginSubmit" type="submit">Sign in securely <span>→</span></button>
+      <p class="auth-footnote">Access is verified by the Northstar server. Your role determines your workspace permissions.</p>
+    </form>
+    <div class="gate-foot"><span>Northstar · School Operations</span><span id="gateHint">Choose your role to continue <b>→</b></span><span>SECURE PORTAL</span></div>
+  </div>
+</section>
+
+<div class="layout" id="appLayout" hidden>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#" data-page="overview" aria-label="Northstar overview">
+      <span class="brand-symbol"><i></i><i></i><i></i><i></i></span>
+      <span><b>northstar</b><small>SCHOOL OPERATIONS</small></span>
+    </a>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="nav">
+      <button class="nav-link active" data-page="overview"><span class="nav-icon">◫</span>Overview</button>
+      <button class="nav-link" data-page="students"><span class="nav-icon">♙</span>Students <small>1.2k</small></button>
+      <button class="nav-link" data-page="fees"><span class="nav-icon">▤</span>Fee management</button>
+      <button class="nav-link" data-page="inventory"><span class="nav-icon">▦</span>Inventory</button>
+      <button class="nav-link" data-page="vendors"><span class="nav-icon">▧</span>Vendors</button>
+      <button class="nav-link" data-page="expenses"><span class="nav-icon">↗</span>Expenses</button>
+      <button class="nav-link" data-page="approvals"><span class="nav-icon">✓</span>Approval center <i class="nav-dot"></i></button>
+      <button class="nav-link" data-page="reports"><span class="nav-icon">▥</span>Reports</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="help-card"><span class="help-mark">✳</span><b>Need a hand?</b><p>Find your way around Northstar.</p><button id="helpButton">Explore quick guide <span>↗</span></button></div>
+      <button class="nav-link" data-page="settings"><span class="nav-icon">⚙</span>Settings</button>
+      <div class="system-status"><i></i> Demo workspace operational</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+      <div class="breadcrumbs"><span>Northstar</span><span>/</span><b id="crumb">Overview</b></div>
+      <div class="top-actions">
+        <label class="role-label">Signed in as
+          <select id="roleSelect" aria-label="Current authenticated role" disabled>
+            <option value="accountant">Accountant</option><option value="hod">HOD</option><option value="gm">GM</option>
+          </select>
+        </label>
+        <button class="icon-button" id="notificationButton" aria-label="Notifications">♧<i></i></button>
+        <div class="profile"><span class="avatar" id="avatar">AM</span><span class="profile-text"><b id="profileName">Accountant</b><small id="profileRole">Authenticated</small></span><button class="logout-button" id="logoutButton" type="button">Log out ↗</button></div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="view active" id="overviewView">
+        <div class="page-heading">
+          <div><div class="eyebrow" id="dateLabel">SCHOOL OPERATIONS · OCTOBER 2026</div><h1 id="greeting">Good afternoon, Amina <span class="spark">✳</span></h1><p id="greetingSub">Here’s what needs your attention across the school today.</p></div>
+          <div class="heading-buttons"><button class="btn secondary" id="exportSummary">↓ Export summary</button><button class="btn primary" id="newRequest">＋ New request</button></div>
+        </div>
+        <div class="notice" id="monthNotice"><span class="notice-info">i</span><span><b>Month-end close is approaching.</b> Review outstanding invoices and fee balances before 31 October.</span><button data-page="reports">View checklist <span>→</span></button><button class="notice-close" id="closeNotice" aria-label="Dismiss notice">×</button></div>
+
+        <div class="section-title"><div><h2>Financial snapshot</h2><p>October 2026 · Demo figures in PKR</p></div><button class="link-button" data-page="reports">Full report ↗</button></div>
+        <div class="metric-grid">
+          <article class="metric-card"><div class="metric-head"><span>Fees collected</span><span class="metric-icon blue">↗</span></div><div class="metric-value">8.42M</div><div class="metric-foot"><span class="trend good">↑ 8.2%</span><span>vs. last month</span></div><div class="mini-bars" aria-hidden="true"><i style="height:34%"></i><i style="height:48%"></i><i style="height:40%"></i><i style="height:63%"></i><i style="height:52%"></i><i style="height:78%"></i><i style="height:70%"></i><i style="height:93%"></i><i style="height:80%"></i><i style="height:100%"></i></div></article>
+          <article class="metric-card"><div class="metric-head"><span>Outstanding fees</span><span class="metric-icon amber">◷</span></div><div class="metric-value">1.26M</div><div class="metric-foot"><span class="trend good">↓ 3.4%</span><span>vs. last month</span></div><div class="progress-caption"><div class="progress"><i style="width:64%"></i></div><small>64% of dues followed up</small></div></article>
+          <article class="metric-card"><div class="metric-head"><span>Pending approvals</span><span class="metric-icon violet">◈</span></div><div class="metric-value" id="pendingMetric">12 <small>requests</small></div><div class="metric-foot"><span class="trend neutral">4 urgent</span><span>need attention</span></div><div class="avatar-stack"><span>SK</span><span>FA</span><span>+6</span><small>Across 3 departments</small></div></article>
+          <article class="metric-card"><div class="metric-head"><span>Inventory health</span><span class="metric-icon green">▦</span></div><div class="metric-value">92.8<small>%</small></div><div class="metric-foot"><span class="trend good">Healthy</span><span>stock availability</span></div><div class="stock-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="muted"></i></div><small class="metric-sub">3 items below reorder level</small></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel chart-panel"><div class="panel-head"><div><h2>Collection overview</h2><p>Monthly fee collection against target</p></div><select id="chartRange" class="select-small"><option value="6">Last 6 months</option><option value="3">Last 3 months</option></select></div>
+            <div class="legend"><span><i class="legend-collected"></i>Collected</span><span><i class="legend-target"></i>Target</span></div>
+            <div class="chart"><div class="axis"><span>10M</span><span>7.5M</span><span>5M</span><span>2.5M</span><span>0</span></div><div class="chart-body" id="chartBody"><div class="chart-grid"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="month"><div class="bars"><i class="bar collected" style="height:55%"></i><i class="bar target" style="height:65%"></i></div><span>May</span></div>
+              <div class="month"><div class="bars"><i class="bar collected" style="height:62%"></i><i class="bar target" style="height:70%"></i></div><span>Jun</span></div>
+              <div class="month"><div class="bars"><i class="bar collected" style="height:49%"></i><i class="bar target" style="height:67%"></i></div><span>Jul</span></div>
+              <div class="month"><div class="bars"><i class="bar collected" style="height:78%"></i><i class="bar target" style="height:80%"></i></div><span>Aug</span></div>
+              <div class="month"><div class="bars"><i class="bar collected" style="height:68%"></i><i class="bar target" style="height:84%"></i></div><span>Sep</span></div>
+              <div class="month"><div class="bars"><i class="bar collected" style="height:88%"></i><i class="bar target" style="height:92%"></i></div><span>Oct</span></div>
+            </div></div>
+            <div class="chart-foot"><span><b>Rs. 8.42M</b> collected this month</span><span>Target: Rs. 9.10M</span></div>
+          </section>
+          <section class="panel attention-panel"><div class="panel-head"><div><h2>Needs your attention</h2><p>Items that may need a follow-up</p></div><span class="pill-count">4</span></div>
+            <div class="attention-list">
+              <button class="attention-row" data-page="approvals"><span class="attention-icon orange">↗</span><span class="attention-copy"><b>Generator maintenance</b><small>Invoice · PKR 48,500</small></span><span class="attention-state"><i class="status pending">Pending</i><small>2h ago</small></span></button>
+              <button class="attention-row" data-page="inventory"><span class="attention-icon purple">▦</span><span class="attention-copy"><b>Grade 4 notebooks</b><small>Stock below reorder level</small></span><span class="attention-state"><i class="status low">Low stock</i><small>Today</small></span></button>
+              <button class="attention-row" data-page="fees"><span class="attention-icon blue">◷</span><span class="attention-copy"><b>Fee follow-up</b><small>Class 8 · 17 accounts</small></span><span class="attention-state"><i class="status overdue">Overdue</i><small>1d ago</small></span></button>
+              <button class="attention-row" data-page="approvals"><span class="attention-icon green">✓</span><span class="attention-copy"><b>Transport fuel claim</b><small>Expense · PKR 26,000</small></span><span class="attention-state"><i class="status review">In review</i><small>Yesterday</small></span></button>
+            </div><button class="panel-link" data-page="approvals">Open approval center <span>→</span></button>
+          </section>
+        </div>
+
+        <section class="panel activity-panel"><div class="panel-head activity-head"><div><h2>Recent activity</h2><p>Latest entries recorded in the demo workspace</p></div><div class="table-tools"><label class="search"><span>⌕</span><input id="activitySearch" type="search" placeholder="Search activity..." aria-label="Search activity"></label><button class="link-button" data-page="reports">View all ↗</button></div></div>
+          <div class="table-scroll"><table><thead><tr><th>ACTIVITY</th><th>REFERENCE</th><th>OWNER</th><th>DATE</th><th>STATUS</th><th></th></tr></thead><tbody id="activityRows"></tbody></table></div>
+          <div class="table-foot"><span id="activityCount">Showing recent activity</span><span>Sample data · <i class="online-dot"></i> Demo mode</span></div>
+        </section>
+        <footer class="footer"><span>© 2026 Northstar School Operations</span><span>Built for clarity. Designed for accountability.</span></footer>
+      </section>
+
+      <section class="view" id="vendorsView">
+        <div class="page-heading"><div><div class="eyebrow">SUPPLIERS & PARTNERS</div><h1>Vendor directory</h1><p class="page-subtitle">Supplier details, invoices and balances in one place.</p></div><div class="heading-buttons"><button class="btn secondary" id="vendorExport">↓ Export CSV</button><button class="btn primary" id="addVendor">＋ Add vendor</button></div></div>
+        <div class="metric-grid vendor-metrics">
+          <article class="metric-card"><div class="metric-head"><span>Active vendors</span><span class="metric-icon blue">▧</span></div><div class="metric-value" id="vendorTotal">8</div><div class="metric-foot"><span>Across 5 categories</span></div></article>
+          <article class="metric-card"><div class="metric-head"><span>Outstanding balance</span><span class="metric-icon amber">◷</span></div><div class="metric-value">384,500</div><div class="metric-foot"><span class="trend neutral">3 invoices</span><span>awaiting payment</span></div></article>
+          <article class="metric-card"><div class="metric-head"><span>Paid this month</span><span class="metric-icon green">✓</span></div><div class="metric-value">1.18M</div><div class="metric-foot"><span class="trend good">↑ 12.6%</span><span>vs. September</span></div></article>
+          <article class="metric-card"><div class="metric-head"><span>Needs review</span><span class="metric-icon violet">⌕</span></div><div class="metric-value">2 <small>vendors</small></div><div class="metric-foot"><span>Missing documents</span></div></article>
+        </div>
+        <section class="panel table-panel"><div class="panel-head vendor-tools"><div><h2>All vendors</h2><p>Review supplier information and payment status.</p></div><div class="table-tools"><label class="search"><span>⌕</span><input id="vendorSearch" type="search" placeholder="Search name or category..." aria-label="Search vendors"></label><select class="select-small" id="vendorFilter"><option value="all">All statuses</option><option value="Active">Active</option><option value="Review">Needs review</option></select></div></div>
+          <div class="table-scroll"><table><thead><tr><th>VENDOR</th><th>CATEGORY</th><th>CONTACT</th><th>LAST INVOICE</th><th>OUTSTANDING</th><th>STATUS</th><th></th></tr></thead><tbody id="vendorRows"></tbody></table></div><div class="table-foot"><span id="vendorCount">Showing vendors</span><span>Amounts shown in PKR</span></div></section>
+        <div class="info-note"><span>i</span><p><b>Good practice:</b> Verify vendor documents and payment details before processing the first payment.</p></div>
+        <footer class="footer"><span>© 2026 Northstar School Operations</span><span>Vendor records are fictional demo data.</span></footer>
+      </section>
+
+      <section class="view" id="genericView">
+        <div class="page-heading"><div><div class="eyebrow" id="genericEyebrow">WORKSPACE</div><h1 id="genericTitle">Students</h1><p class="page-subtitle" id="genericSubtitle">Manage records through clear, consistent workflows.</p></div><div class="heading-buttons"><button class="btn secondary" id="genericExport">↓ Export CSV</button><button class="btn primary" id="genericAdd">＋ Add record</button></div></div>
+        <div class="generic-metrics" id="genericMetrics"></div>
+        <section class="panel table-panel"><div class="panel-head"><div><h2 id="genericTableTitle">Records</h2><p id="genericTableSub">Search and review the latest records.</p></div><label class="search"><span>⌕</span><input id="genericSearch" type="search" placeholder="Search records..." aria-label="Search records"></label></div>
+          <div class="table-scroll"><table><thead id="genericHead"></thead><tbody id="genericRows"></tbody></table></div><div class="table-foot"><span id="genericCount">Demo records</span><span>Northstar demo workspace</span></div></section>
+        <div class="info-note"><span>i</span><p id="genericNote">This is a frontend prototype with sample records. Connect a backend before using real school data.</p></div>
+        <footer class="footer"><span>© 2026 Northstar School Operations</span><span>Clear records. Better decisions.</span></footer>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="backdrop" id="modalBackdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><div class="eyebrow">NORTHSTAR WORKSPACE</div><h2 id="modalTitle">Add vendor</h2><p id="modalSubtitle">Create a supplier record for this demo.</p></div><button class="modal-x" id="modalClose" aria-label="Close dialog">×</button></div>
+<form id="vendorForm"><div class="form-grid">
+<label class="field full">Vendor / business name <em>*</em><input name="name" required maxlength="70" placeholder="e.g. Alpine Stationers"></label>
+<label class="field">Category <em>*</em><select name="category" required><option value="">Choose category</option><option>Stationery</option><option>Uniforms</option><option>Maintenance</option><option>Transport</option><option>Food & supplies</option><option>Other</option></select></label>
+<label class="field">Contact person<input name="contact" maxlength="60" placeholder="Full name"></label>
+<label class="field">Phone number<input name="phone" maxlength="30" placeholder="+92 300 1234567"></label>
+<label class="field">Email address<input name="email" type="email" maxlength="90" placeholder="name@company.com"></label>
+<label class="field full">Address<input name="address" maxlength="140" placeholder="City or business address"></label>
+</div><div class="form-note">ⓘ Use fictional information in this demo. Data is stored only in this browser.</div><div class="modal-actions"><button type="button" class="btn secondary" id="cancelModal">Cancel</button><button type="submit" class="btn primary">Save vendor →</button></div></form></section></div>
+<div class="toast-region" id="toastRegion" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
