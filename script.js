@@ -188,7 +188,21 @@ $("#loginForm").addEventListener("submit",async e=>{
   }catch(err){error.textContent=err.message||'Could not connect to the authentication server. Make sure you started the project with npm start.';error.hidden=false;}
   finally{submit.disabled=false;submit.innerHTML='Sign in securely <span>→</span>';}
 });
-$("#logoutButton").addEventListener("click",async()=>{try{await fetch('/api/logout',{method:'POST',credentials:'same-origin'});}catch(_){}$("#appLayout").hidden=true;$("#roleGate").hidden=false;showRolePicker();toast('You have been logged out.');});
+async function returnToRolePicker(message){
+  try{
+    const response=await fetch('/api/logout',{method:'POST',credentials:'same-origin'});
+    if(!response.ok) throw new Error('Server could not end the current session.');
+  }catch(err){
+    // Still show the picker, but warn if the server did not confirm logout.
+    console.error('Logout request failed:',err);
+  }
+  $("#appLayout").hidden=true;
+  $("#roleGate").hidden=false;
+  showRolePicker();
+  if(message) toast(message);
+}
+$("#switchRoleButton").addEventListener("click",()=>returnToRolePicker('Choose another role and sign in with that account.'));
+$("#logoutButton").addEventListener("click",()=>returnToRolePicker('You have been logged out.'));
 $("#activitySearch").addEventListener("input",e=>renderActivity(e.target.value));
 $("#vendorSearch").addEventListener("input",renderVendors);$("#vendorFilter").addEventListener("change",renderVendors);
 $("#addVendor").addEventListener("click",()=>openVendorModal());

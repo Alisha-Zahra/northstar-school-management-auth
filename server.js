@@ -17,6 +17,9 @@ const production = process.env.NODE_ENV === 'production';
 const sessionSecret = process.env.SESSION_SECRET || crypto.randomBytes(48).toString('hex');
 
 app.disable('x-powered-by');
+// Render and similar hosts terminate HTTPS at a reverse proxy. Trust one proxy
+// so secure session cookies work correctly in production.
+if (production) app.set('trust proxy', 1);
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: '10kb' }));
 app.use(session({
@@ -119,6 +122,8 @@ app.get('/api/access/:page', requireAuth, (req, res) => {
 app.get('/api/admin/users', requireRole('gm'), (_req, res) => {
   res.json(readUsers().map(u => ({ id: u.id, username: u.username, role: u.role, displayName: u.displayName })));
 });
+// Never expose the local user store (which contains password hashes) as a static file.
+app.use('/data', (_req, res) => res.sendStatus(404));
 app.use(express.static(__dirname, { index: false, dotfiles: 'deny', setHeaders(res, filePath) {
   if (filePath.endsWith('.html')) res.setHeader('Cache-Control', 'no-store');
 } }));
